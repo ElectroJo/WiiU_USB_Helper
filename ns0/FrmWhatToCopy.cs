@@ -42,13 +42,13 @@ namespace ns0
       if (this.bool_0)
       {
         this.chkCopyGame.Enabled = gclass32_1.GEnum2_0 == GEnum2.const_2;
-        this.chkCopyUpdate.Enabled = gclass32_1.Boolean_3 && gclass32_1.Updates.Any<GClass33>((Func<GClass33, bool>) (gclass33_0 => gclass33_0.GEnum2_0 == GEnum2.const_2));
+        this.chkCopyUpdate.Enabled = gclass32_1.AreThereUpdates && gclass32_1.Updates.Any<GClass33>((Func<GClass33, bool>) (gclass33_0 => gclass33_0.GEnum2_0 == GEnum2.const_2));
         this.chkCopyDlc.Enabled = gclass32_1.Dlc != null && gclass32_1.Dlc.GEnum2_0 == GEnum2.const_2;
       }
       else
       {
         this.chkCopyGame.Enabled = (uint) gclass32_1.GEnum2_0 > 0U;
-        this.chkCopyUpdate.Enabled = gclass32_1.Boolean_3 && gclass32_1.Updates.Any<GClass33>((Func<GClass33, bool>) (gclass33_0 => (uint) gclass33_0.GEnum2_0 > 0U));
+        this.chkCopyUpdate.Enabled = gclass32_1.AreThereUpdates && gclass32_1.Updates.Any<GClass33>((Func<GClass33, bool>) (gclass33_0 => (uint) gclass33_0.GEnum2_0 > 0U));
         this.chkCopyDlc.Enabled = gclass32_1.Dlc != null && (uint) gclass32_1.Dlc.GEnum2_0 > 0U;
       }
       this.Opacity = 0.0;

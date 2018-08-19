@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace ns0
 {
-  public sealed class GClass100 : IDisposable
+  public sealed class TMDExcractionAndProcessing : IDisposable
   {
     private byte[] byte_3 = new byte[64];
     private byte[] byte_4 = new byte[60];
@@ -64,48 +64,48 @@ namespace ns0
 
     public ushort TitleVersion { get; set; }
 
-    private void method_0(Stream stream_0, SystemType genum3_0)
+    private void method_0(Stream TMD_Stream, SystemType SystemType)
     {
-      stream_0.Seek(0L, SeekOrigin.Begin);
+      TMD_Stream.Seek(0L, SeekOrigin.Begin);
       byte[] buffer1 = new byte[8];
-      stream_0.Read(buffer1, 0, 4);
-      this.uint_1 = GClass27.smethod_5(BitConverter.ToUInt32(buffer1, 0));
-      stream_0.Read(this.byte_7, 0, this.byte_7.Length);
-      stream_0.Read(this.byte_4, 0, this.byte_4.Length);
-      stream_0.Read(this.byte_3, 0, this.byte_3.Length);
-      stream_0.Read(buffer1, 0, 4);
+      TMD_Stream.Read(buffer1, 0, 4); //Reads the Signature Type https://3dbrew.org/wiki/Title_metadata#Signature_Type
+      this.uint_1 = GClass27.ToUIntNetworkBytes(BitConverter.ToUInt32(buffer1, 0));
+      TMD_Stream.Read(this.byte_7, 0, this.byte_7.Length); //Maybe Reads the signature?
+      TMD_Stream.Read(this.byte_4, 0, this.byte_4.Length);
+      TMD_Stream.Read(this.byte_3, 0, this.byte_3.Length);
+      TMD_Stream.Read(buffer1, 0, 4);
       this.byte_9 = buffer1[0];
       this.byte_2 = buffer1[1];
       this.byte_8 = buffer1[2];
       this.byte_5 = buffer1[3];
-      stream_0.Read(buffer1, 0, 8);
-      stream_0.Read(buffer1, 0, 8);
-      this.TitleId = GClass27.smethod_6(BitConverter.ToUInt64(buffer1, 0));
-      stream_0.Read(buffer1, 0, 4);
-      this.uint_2 = GClass27.smethod_5(BitConverter.ToUInt32(buffer1, 0));
-      stream_0.Read(buffer1, 0, 2);
-      this.ushort_3 = GClass27.smethod_4(BitConverter.ToUInt16(buffer1, 0));
-      stream_0.Read(buffer1, 0, 2);
-      this.ushort_4 = GClass27.smethod_4(BitConverter.ToUInt16(buffer1, 0));
-      stream_0.Read(buffer1, 0, 2);
-      this.ushort_6 = GClass27.smethod_4(BitConverter.ToUInt16(buffer1, 0));
-      stream_0.Read(this.byte_6, 0, this.byte_6.Length);
-      stream_0.Read(buffer1, 0, 4);
-      this.uint_0 = GClass27.smethod_5(BitConverter.ToUInt32(buffer1, 0));
-      stream_0.Read(buffer1, 0, 8);
-      this.TitleVersion = GClass27.smethod_4(BitConverter.ToUInt16(buffer1, 0));
-      this.NumOfContents = GClass27.smethod_4(BitConverter.ToUInt16(buffer1, 2));
-      this.ushort_2 = GClass27.smethod_4(BitConverter.ToUInt16(buffer1, 4));
-      this.ushort_5 = GClass27.smethod_4(BitConverter.ToUInt16(buffer1, 6));
-      if (genum3_0 != SystemType.SystemWii)
-        stream_0.Position = 2820L;
+      TMD_Stream.Read(buffer1, 0, 8); //Reads past System Version
+      TMD_Stream.Read(buffer1, 0, 8); //Reads Title ID
+      this.TitleId = GClass27.ToULongNetworkBytes(BitConverter.ToUInt64(buffer1, 0)); //Stores Title ID
+      TMD_Stream.Read(buffer1, 0, 4); //Reads Title Type?
+      this.uint_2 = GClass27.ToUIntNetworkBytes(BitConverter.ToUInt32(buffer1, 0)); //Stores Title Type
+      TMD_Stream.Read(buffer1, 0, 2); //Group ID
+      this.ushort_3 = GClass27.ToUShortNetworkBytes(BitConverter.ToUInt16(buffer1, 0));
+      TMD_Stream.Read(buffer1, 0, 2); 
+      this.ushort_4 = GClass27.ToUShortNetworkBytes(BitConverter.ToUInt16(buffer1, 0));
+      TMD_Stream.Read(buffer1, 0, 2); 
+      this.ushort_6 = GClass27.ToUShortNetworkBytes(BitConverter.ToUInt16(buffer1, 0));
+      TMD_Stream.Read(this.byte_6, 0, this.byte_6.Length);
+      TMD_Stream.Read(buffer1, 0, 4);
+      this.uint_0 = GClass27.ToUIntNetworkBytes(BitConverter.ToUInt32(buffer1, 0));
+      TMD_Stream.Read(buffer1, 0, 8); //Read Title Version, Content Count, Boot Content, and Padding
+      this.TitleVersion = GClass27.ToUShortNetworkBytes(BitConverter.ToUInt16(buffer1, 0));
+      this.NumOfContents = GClass27.ToUShortNetworkBytes(BitConverter.ToUInt16(buffer1, 2));
+      this.ushort_2 = GClass27.ToUShortNetworkBytes(BitConverter.ToUInt16(buffer1, 4)); //Probably Boot Content
+      this.ushort_5 = GClass27.ToUShortNetworkBytes(BitConverter.ToUInt16(buffer1, 6)); //Probably Padding?
+      if (SystemType != SystemType.SystemWii)
+        TMD_Stream.Position = 2820L;
       this.list_0 = new List<GClass101>();
       for (int index = 0; index < (int) this.NumOfContents; ++index)
       {
         GClass101 gclass101;
-        if (genum3_0 != SystemType.SystemWiiU && genum3_0 != SystemType.SystemWii)
+        if (SystemType != SystemType.SystemWiiU && SystemType != SystemType.SystemWii)
         {
-          if (genum3_0 != SystemType.System3DS)
+          if (SystemType != SystemType.System3DS)
             throw new NotImplementedException();
           GClass102 gclass102 = new GClass102();
           gclass102.Hash = new byte[32];
@@ -117,22 +117,22 @@ namespace ns0
           gclass103.Hash = new byte[20];
           gclass101 = (GClass101) gclass103;
         }
-        stream_0.Read(buffer1, 0, 8);
-        gclass101.ContentId = GClass27.smethod_5(BitConverter.ToUInt32(buffer1, 0));
-        gclass101.Index = GClass27.smethod_4(BitConverter.ToUInt16(buffer1, 4));
-        gclass101.GEnum6_0 = (GEnum6) GClass27.smethod_4(BitConverter.ToUInt16(buffer1, 6));
-        stream_0.Read(buffer1, 0, 8);
-        gclass101.Size = new DataSize(GClass27.smethod_6(BitConverter.ToUInt64(buffer1, 0)));
-        stream_0.Read(gclass101.Hash, 0, gclass101.Hash.Length);
+        TMD_Stream.Read(buffer1, 0, 8);
+        gclass101.ContentId = GClass27.ToUIntNetworkBytes(BitConverter.ToUInt32(buffer1, 0));
+        gclass101.Index = GClass27.ToUShortNetworkBytes(BitConverter.ToUInt16(buffer1, 4));
+        gclass101.GEnum6_0 = (GEnum6) GClass27.ToUShortNetworkBytes(BitConverter.ToUInt16(buffer1, 6));
+        TMD_Stream.Read(buffer1, 0, 8);
+        gclass101.Size = new DataSize(GClass27.ToULongNetworkBytes(BitConverter.ToUInt64(buffer1, 0)));
+        TMD_Stream.Read(gclass101.Hash, 0, gclass101.Hash.Length);
         this.list_0.Add(gclass101);
-        if (genum3_0 == SystemType.SystemWiiU)
+        if (SystemType == SystemType.SystemWiiU)
         {
           byte[] buffer2 = new byte[12];
-          stream_0.Read(buffer2, 0, 12);
+          TMD_Stream.Read(buffer2, 0, 12);
         }
       }
-      stream_0.Read(this.Certificate1, 0, this.Certificate1.Length);
-      stream_0.Read(this.Certificate2, 0, this.Certificate2.Length);
+      TMD_Stream.Read(this.Certificate1, 0, this.Certificate1.Length);
+      TMD_Stream.Read(this.Certificate2, 0, this.Certificate2.Length);
     }
 
     public void Dispose()
@@ -141,14 +141,14 @@ namespace ns0
       GC.SuppressFinalize((object) this);
     }
 
-    ~GClass100()
+    ~TMDExcractionAndProcessing()
     {
       this.method_1(false);
     }
 
-    private void method_1(bool bool_1)
+    private void method_1(bool Should_Wipe_Vars_Bool)
     {
-      if (bool_1 && !this.bool_0)
+      if (Should_Wipe_Vars_Bool && !this.bool_0)
       {
         this.byte_7 = (byte[]) null;
         this.byte_4 = (byte[]) null;
@@ -168,25 +168,25 @@ namespace ns0
       }
     }
 
-    public static GClass100 smethod_0(string string_0, SystemType genum3_0)
+    public static TMDExcractionAndProcessing smethod_0(string string_0, SystemType SystemType)
     {
-      return GClass100.smethod_1(File.ReadAllBytes(string_0), genum3_0);
+      return TMDExcractionAndProcessing.smethod_1(File.ReadAllBytes(string_0), SystemType);
     }
 
-    public static GClass100 smethod_1(byte[] byte_10, SystemType genum3_0)
+    public static TMDExcractionAndProcessing smethod_1(byte[] Nintendo_TMD, SystemType SystemType)
     {
-      GClass100 gclass100 = new GClass100();
-      MemoryStream memoryStream = new MemoryStream(byte_10);
+      TMDExcractionAndProcessing gclass100 = new TMDExcractionAndProcessing();
+      MemoryStream TMD_MemoryStream = new MemoryStream(Nintendo_TMD);
       try
       {
-        gclass100.method_0((Stream) memoryStream, genum3_0);
+        gclass100.method_0((Stream) TMD_MemoryStream, SystemType);
       }
       catch
       {
-        memoryStream.Dispose();
+        TMD_MemoryStream.Dispose();
         throw;
       }
-      memoryStream.Dispose();
+      TMD_MemoryStream.Dispose();
       return gclass100;
     }
   }

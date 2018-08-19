@@ -20,13 +20,13 @@ namespace ns0
     private string string_1;
     private string string_2;
     private string string_3;
-    private GClass100 gclass100_0;
+    private TMDExcractionAndProcessing gclass100_0;
     private GClass108 gclass108_0;
     private bool bool_0;
 
     public void method_0(string string_4, string string_5, string string_6, string string_7)
     {
-      this.gclass100_0 = GClass100.smethod_0(string_6, SystemType.SystemWii);
+      this.gclass100_0 = TMDExcractionAndProcessing.smethod_0(string_6, SystemType.SystemWii);
       this.string_0 = string_4;
       this.string_1 = string_5;
       this.string_2 = string_6;

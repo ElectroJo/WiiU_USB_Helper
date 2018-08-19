@@ -82,7 +82,7 @@ namespace ns0
       foreach (string str1 in class156.string_0)
       {
         string str2 = "Ready to import";
-        GClass100 gclass100 = GClass100.smethod_0(str1, SystemType.SystemWiiU);
+        TMDExcractionAndProcessing gclass100 = TMDExcractionAndProcessing.smethod_0(str1, SystemType.SystemWiiU);
         TitleId titleId = new TitleId(gclass100.TitleId.ToString("x16"));
         if (!GClass28.dictionary_0.ContainsKey(titleId.FullGame))
         {

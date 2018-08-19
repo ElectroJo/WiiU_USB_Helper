@@ -524,7 +524,7 @@ namespace ns0
       this.method_6((GClass30) gclass32_2);
       try
       {
-        if (gclass32_2.Boolean_3 && !this.dlQueue.smethod_0((GClass30) gclass32_2.Updates.Last<GClass33>()) && (gclass32_2.Updates.Last<GClass33>().GEnum2_0 != GEnum2.const_2 && RadMessageBox.Show(string.Format("{0} has an update that you do not have downloaded yet. Would you like to add it to the queue?", (object) gclass32_2), "Add update?", MessageBoxButtons.YesNo) == DialogResult.Yes))
+        if (gclass32_2.AreThereUpdates && !this.dlQueue.smethod_0((GClass30) gclass32_2.Updates.Last<GClass33>()) && (gclass32_2.Updates.Last<GClass33>().GEnum2_0 != GEnum2.const_2 && RadMessageBox.Show(string.Format("{0} has an update that you do not have downloaded yet. Would you like to add it to the queue?", (object) gclass32_2), "Add update?", MessageBoxButtons.YesNo) == DialogResult.Yes))
           this.method_6((GClass30) gclass32_2.Updates.Last<GClass33>());
         if (!gclass32_2.Boolean_2 || this.dlQueue.smethod_0((GClass30) gclass32_2.Dlc) || (gclass32_2.Dlc.GEnum2_0 == GEnum2.const_2 || RadMessageBox.Show(string.Format("{0} has a DLC that you do not have downloaded yet. Would you like to add it to the queue?", (object) gclass32_2), "Add DLC?", MessageBoxButtons.YesNo) != DialogResult.Yes))
           return;
@@ -543,7 +543,7 @@ namespace ns0
       listViewDataItem[1] = (object) gclass32_2.Region;
       listViewDataItem[2] = (object) gclass32_2.Size;
       listViewDataItem[3] = (object) (gclass32_2.Int32_0.ToString() + "%");
-      listViewDataItem[4] = gclass32_2.Boolean_3 ? (gclass32_2.Updates.Last<GClass33>().GEnum2_0 == GEnum2.const_2 ? (object) "Ready" : (object) "Yes") : (object) "No";
+      listViewDataItem[4] = gclass32_2.AreThereUpdates ? (gclass32_2.Updates.Last<GClass33>().GEnum2_0 == GEnum2.const_2 ? (object) "Ready" : (object) "Yes") : (object) "No";
       listViewDataItem[5] = gclass32_2.Boolean_2 ? (gclass32_2.Dlc.GEnum2_0 == GEnum2.const_2 ? (object) "Ready" : (object) "Yes") : (object) "No";
       listViewDataItem[6] = (object) gclass32_2.String_0;
       return listViewDataItem;
@@ -1028,7 +1028,7 @@ namespace ns0
       foreach (ListViewDataItem listViewDataItem in this.lstGames.Items)
       {
         GClass32 tag = listViewDataItem.Tag as GClass32;
-        if (tag.Boolean_3 && listViewDataItem.Visible)
+        if (tag.AreThereUpdates && listViewDataItem.Visible)
         {
           if (flag)
           {
@@ -1143,7 +1143,7 @@ namespace ns0
       {
         if (gclass32.GEnum2_0 == GEnum2.const_2)
           this.method_2((GClass30) gclass32);
-        if (gclass32.Boolean_3)
+        if (gclass32.AreThereUpdates)
         {
           foreach (GClass30 gclass30_0 in gclass32.Updates.Where<GClass33>((Func<GClass33, bool>) (gclass33_0 => gclass33_0.GEnum2_0 == GEnum2.const_2)))
             this.method_2(gclass30_0);
@@ -2017,7 +2017,7 @@ namespace ns0
         else
           this.radContextMenu_0.Items[7].Text = "Unpack Wii U titles and pack 3DS titles";
       }
-      this.radContextMenu_0.Items[1].Enabled = tag.Boolean_3 && this.lstGames.SelectedItems.Count == 1;
+      this.radContextMenu_0.Items[1].Enabled = tag.AreThereUpdates && this.lstGames.SelectedItems.Count == 1;
       this.radContextMenu_0.Items[2].Enabled = tag.Boolean_2 && this.lstGames.SelectedItems.Count == 1;
       this.radContextMenu_0.Items[11].Enabled = !source1.Any<GClass32>((Func<GClass32, bool>) (gclass32_0 => gclass32_0.System != SystemType.SystemWiiU));
       RadContextMenu radContextMenu0 = this.radContextMenu_0;
@@ -2121,7 +2121,7 @@ namespace ns0
         // ISSUE: reference to a compiler-generated field
         class180.list_1 = new List<GClass33>();
         // ISSUE: reference to a compiler-generated field
-        foreach (GClass32 gclass32 in class180.list_0.Where<GClass32>((Func<GClass32, bool>) (gclass32_0 => gclass32_0.Boolean_3)))
+        foreach (GClass32 gclass32 in class180.list_0.Where<GClass32>((Func<GClass32, bool>) (gclass32_0 => gclass32_0.AreThereUpdates)))
         {
           if (GClass83.smethod_1(gclass82_1, (GClass30) gclass32) < int.Parse(gclass32.Updates.Last<GClass33>().Version))
           {
@@ -2545,7 +2545,7 @@ namespace ns0
       switch (RadMessageBox.Show("Would you like to specify a custom cover for this game? Choose cancel to download the default cover.", "Custom cover", MessageBoxButtons.YesNoCancel))
       {
         case DialogResult.Cancel:
-          byte[] buffer = GClass85.smethod_0(this.SelectedGame.String_7, TimeSpan.Zero);
+          byte[] buffer = GClass85.smethod_0(this.SelectedGame.BoxArtURL, TimeSpan.Zero);
           if (buffer == null)
             break;
           this.pbCover.Image = Image.FromStream((Stream) new MemoryStream(buffer));
@@ -2562,7 +2562,7 @@ namespace ns0
           using (MemoryStream memoryStream = new MemoryStream())
           {
             image.Save((Stream) memoryStream, ImageFormat.Png);
-            GClass88.smethod_9(new Uri(this.SelectedGame.String_7), memoryStream.ToArray());
+            GClass88.smethod_9(new Uri(this.SelectedGame.BoxArtURL), memoryStream.ToArray());
             break;
           }
       }
@@ -3084,7 +3084,7 @@ namespace ns0
           if (bool_10)
           {
             tag.method_6();
-            if (tag.Boolean_3)
+            if (tag.AreThereUpdates)
             {
               foreach (GClass30 update in tag.Updates)
                 update.method_6();
@@ -3093,7 +3093,7 @@ namespace ns0
               tag.Dlc.method_6();
             listViewDataItem.Group = this.method_11(tag);
             listViewDataItem[3] = (object) (tag.Int32_0.ToString() + "%");
-            listViewDataItem[4] = tag.Boolean_3 ? (tag.Updates.Last<GClass33>().GEnum2_0 == GEnum2.const_2 ? (object) "Ready" : (object) "Yes") : (object) "No";
+            listViewDataItem[4] = tag.AreThereUpdates ? (tag.Updates.Last<GClass33>().GEnum2_0 == GEnum2.const_2 ? (object) "Ready" : (object) "Yes") : (object) "No";
             listViewDataItem[5] = tag.Boolean_2 ? (tag.Dlc.GEnum2_0 == GEnum2.const_2 ? (object) "Ready" : (object) "Yes") : (object) "No";
             if (bool_9)
             {
@@ -3178,7 +3178,7 @@ namespace ns0
       {
       }
       this.cmdAddGame.Text = this.SelectedGame.GEnum2_0 != GEnum2.const_2 || this.SelectedGame.Boolean_0 ? "&Add" : "&Verify";
-      if (this.SelectedGame.Boolean_3)
+      if (this.SelectedGame.AreThereUpdates)
       {
         this.lblUpdateSize.Text = this.SelectedGame.Updates.Last<GClass33>().Size.ToString();
         this.lblStatusUpdateEmu.LabelElement.ToolTipText = this.SelectedGame.Updates.Last<GClass33>().String_4;
@@ -3227,8 +3227,8 @@ namespace ns0
         this.lblTitle.Text += " (CFW ONLY)";
       if (this.SelectedGame.DiscOnly)
         this.lblTitle.Text += " (ONLY UPDATES AND DLC) ";
-      this.cmdCopy.Enabled = this.SelectedGame.GEnum2_0 == GEnum2.const_2 || this.SelectedGame.Boolean_3 || this.SelectedGame.Boolean_2 && this.SelectedGame.Dlc.GEnum2_0 == GEnum2.const_2;
-      this.cmdDelete.Enabled = this.SelectedGame.GEnum2_0 != GEnum2.const_0 || this.SelectedGame.Boolean_1 || this.SelectedGame.Boolean_3 || this.SelectedGame.Boolean_2 && (uint) this.SelectedGame.Dlc.GEnum2_0 > 0U;
+      this.cmdCopy.Enabled = this.SelectedGame.GEnum2_0 == GEnum2.const_2 || this.SelectedGame.AreThereUpdates || this.SelectedGame.Boolean_2 && this.SelectedGame.Dlc.GEnum2_0 == GEnum2.const_2;
+      this.cmdDelete.Enabled = this.SelectedGame.GEnum2_0 != GEnum2.const_0 || this.SelectedGame.Boolean_1 || this.SelectedGame.AreThereUpdates || this.SelectedGame.Boolean_2 && (uint) this.SelectedGame.Dlc.GEnum2_0 > 0U;
       this.txtDesc.Text = "";
       this.pbBanner.Image = (Image) Class123.banner;
       switch (this.SelectedGame.System)

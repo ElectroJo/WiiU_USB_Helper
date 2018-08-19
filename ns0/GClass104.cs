@@ -17,11 +17,11 @@ namespace ns0
 
     public static GClass104.GEnum7 smethod_0(byte[] byte_0)
     {
-      if (byte_0.Length > 68 && (int) GClass27.smethod_5(BitConverter.ToUInt32(byte_0, 64)) == (int) GClass104.uint_1)
+      if (byte_0.Length > 68 && (int) GClass27.ToUIntNetworkBytes(BitConverter.ToUInt32(byte_0, 64)) == (int) GClass104.uint_1)
         return GClass104.GEnum7.const_1;
-      if (byte_0.Length > 132 && (int) GClass27.smethod_5(BitConverter.ToUInt32(byte_0, 128)) == (int) GClass104.uint_1)
+      if (byte_0.Length > 132 && (int) GClass27.ToUIntNetworkBytes(BitConverter.ToUInt32(byte_0, 128)) == (int) GClass104.uint_1)
         return GClass104.GEnum7.const_2;
-      return byte_0.Length > 4 && (int) GClass27.smethod_5(BitConverter.ToUInt32(byte_0, 0)) == (int) GClass104.uint_0 ? GClass104.GEnum7.const_3 : GClass104.GEnum7.const_0;
+      return byte_0.Length > 4 && (int) GClass27.ToUIntNetworkBytes(BitConverter.ToUInt32(byte_0, 0)) == (int) GClass104.uint_0 ? GClass104.GEnum7.const_3 : GClass104.GEnum7.const_0;
     }
 
     public static GClass104.GEnum7 smethod_1(Stream stream_0)
@@ -31,21 +31,21 @@ namespace ns0
       {
         stream_0.Seek(64L, SeekOrigin.Begin);
         stream_0.Read(buffer, 0, buffer.Length);
-        if ((int) GClass27.smethod_5(BitConverter.ToUInt32(buffer, 0)) == (int) GClass104.uint_1)
+        if ((int) GClass27.ToUIntNetworkBytes(BitConverter.ToUInt32(buffer, 0)) == (int) GClass104.uint_1)
           return GClass104.GEnum7.const_1;
       }
       if (stream_0.Length > 132L)
       {
         stream_0.Seek(128L, SeekOrigin.Begin);
         stream_0.Read(buffer, 0, buffer.Length);
-        if ((int) GClass27.smethod_5(BitConverter.ToUInt32(buffer, 0)) == (int) GClass104.uint_1)
+        if ((int) GClass27.ToUIntNetworkBytes(BitConverter.ToUInt32(buffer, 0)) == (int) GClass104.uint_1)
           return GClass104.GEnum7.const_2;
       }
       if (stream_0.Length > 4L)
       {
         stream_0.Seek(0L, SeekOrigin.Begin);
         stream_0.Read(buffer, 0, buffer.Length);
-        if ((int) GClass27.smethod_5(BitConverter.ToUInt32(buffer, 0)) == (int) GClass104.uint_0)
+        if ((int) GClass27.ToUIntNetworkBytes(BitConverter.ToUInt32(buffer, 0)) == (int) GClass104.uint_0)
           return GClass104.GEnum7.const_3;
       }
       return GClass104.GEnum7.const_0;
@@ -147,10 +147,10 @@ namespace ns0
         stream_0.Seek(0L, SeekOrigin.Begin);
         byte[] buffer = new byte[4];
         stream_0.Read(buffer, 0, 4);
-        if ((int) GClass27.smethod_5(BitConverter.ToUInt32(buffer, 0)) != (int) this.uint_1)
+        if ((int) GClass27.ToUIntNetworkBytes(BitConverter.ToUInt32(buffer, 0)) != (int) this.uint_1)
           throw new Exception("Invalid Magic!");
         stream_0.Read(buffer, 0, 4);
-        this.uint_0 = GClass27.smethod_5(BitConverter.ToUInt32(buffer, 0));
+        this.uint_0 = GClass27.ToUIntNetworkBytes(BitConverter.ToUInt32(buffer, 0));
         stream_0.Read(this.byte_1, 0, this.byte_1.Length);
         stream_0.Read(this.byte_0, 0, this.byte_0.Length);
       }
@@ -158,8 +158,8 @@ namespace ns0
       private void method_4(Stream stream_0)
       {
         stream_0.Seek(0L, SeekOrigin.Begin);
-        stream_0.Write(BitConverter.GetBytes(GClass27.smethod_5(this.uint_1)), 0, 4);
-        stream_0.Write(BitConverter.GetBytes(GClass27.smethod_5(this.uint_0)), 0, 4);
+        stream_0.Write(BitConverter.GetBytes(GClass27.ToUIntNetworkBytes(this.uint_1)), 0, 4);
+        stream_0.Write(BitConverter.GetBytes(GClass27.ToUIntNetworkBytes(this.uint_0)), 0, 4);
         stream_0.Write(this.byte_1, 0, this.byte_1.Length);
         stream_0.Write(this.byte_0, 0, this.byte_0.Length);
       }
@@ -380,21 +380,21 @@ namespace ns0
           stream_0.Read(this.byte_0, 0, this.byte_0.Length);
         stream_0.Read(this.byte_9, 0, this.byte_9.Length);
         stream_0.Read(buffer1, 0, 4);
-        if ((int) GClass27.smethod_5(BitConverter.ToUInt32(buffer1, 0)) != (int) this.uint_3)
+        if ((int) GClass27.ToUIntNetworkBytes(BitConverter.ToUInt32(buffer1, 0)) != (int) this.uint_3)
           throw new Exception("Invalid Magic!");
         stream_0.Read(buffer1, 0, 4);
-        if ((int) GClass27.smethod_5(BitConverter.ToUInt32(buffer1, 0)) != (int) this.uint_4)
+        if ((int) GClass27.ToUIntNetworkBytes(BitConverter.ToUInt32(buffer1, 0)) != (int) this.uint_4)
           throw new Exception("Invalid Header Size!");
         stream_0.Read(buffer1, 0, 4);
-        this.uint_6 = GClass27.smethod_5(BitConverter.ToUInt32(buffer1, 0));
+        this.uint_6 = GClass27.ToUIntNetworkBytes(BitConverter.ToUInt32(buffer1, 0));
         stream_0.Read(buffer1, 0, 4);
-        this.uint_2 = GClass27.smethod_5(BitConverter.ToUInt32(buffer1, 0));
+        this.uint_2 = GClass27.ToUIntNetworkBytes(BitConverter.ToUInt32(buffer1, 0));
         stream_0.Read(buffer1, 0, 4);
-        this.uint_0 = GClass27.smethod_5(BitConverter.ToUInt32(buffer1, 0));
+        this.uint_0 = GClass27.ToUIntNetworkBytes(BitConverter.ToUInt32(buffer1, 0));
         stream_0.Read(buffer1, 0, 4);
-        this.uint_5 = GClass27.smethod_5(BitConverter.ToUInt32(buffer1, 0));
+        this.uint_5 = GClass27.ToUIntNetworkBytes(BitConverter.ToUInt32(buffer1, 0));
         stream_0.Read(buffer1, 0, 4);
-        this.uint_1 = GClass27.smethod_5(BitConverter.ToUInt32(buffer1, 0));
+        this.uint_1 = GClass27.ToUIntNetworkBytes(BitConverter.ToUInt32(buffer1, 0));
         stream_0.Read(this.byte_7, 0, this.byte_7.Length);
         stream_0.Read(this.byte_2, 0, this.byte_2.Length);
         stream_0.Read(this.byte_4, 0, this.byte_4.Length);
@@ -476,13 +476,13 @@ namespace ns0
         if (!this.bool_1)
           stream_0.Write(this.byte_0, 0, this.byte_0.Length);
         stream_0.Write(this.byte_9, 0, this.byte_9.Length);
-        stream_0.Write(BitConverter.GetBytes(GClass27.smethod_5(this.uint_3)), 0, 4);
-        stream_0.Write(BitConverter.GetBytes(GClass27.smethod_5(this.uint_4)), 0, 4);
-        stream_0.Write(BitConverter.GetBytes(GClass27.smethod_5(this.uint_6)), 0, 4);
-        stream_0.Write(BitConverter.GetBytes(GClass27.smethod_5(this.uint_2)), 0, 4);
-        stream_0.Write(BitConverter.GetBytes(GClass27.smethod_5(this.uint_0)), 0, 4);
-        stream_0.Write(BitConverter.GetBytes(GClass27.smethod_5(this.uint_5)), 0, 4);
-        stream_0.Write(BitConverter.GetBytes(GClass27.smethod_5(this.uint_1)), 0, 4);
+        stream_0.Write(BitConverter.GetBytes(GClass27.ToUIntNetworkBytes(this.uint_3)), 0, 4);
+        stream_0.Write(BitConverter.GetBytes(GClass27.ToUIntNetworkBytes(this.uint_4)), 0, 4);
+        stream_0.Write(BitConverter.GetBytes(GClass27.ToUIntNetworkBytes(this.uint_6)), 0, 4);
+        stream_0.Write(BitConverter.GetBytes(GClass27.ToUIntNetworkBytes(this.uint_2)), 0, 4);
+        stream_0.Write(BitConverter.GetBytes(GClass27.ToUIntNetworkBytes(this.uint_0)), 0, 4);
+        stream_0.Write(BitConverter.GetBytes(GClass27.ToUIntNetworkBytes(this.uint_5)), 0, 4);
+        stream_0.Write(BitConverter.GetBytes(GClass27.ToUIntNetworkBytes(this.uint_1)), 0, 4);
         stream_0.Write(this.byte_7, 0, this.byte_7.Length);
         stream_0.Write(this.byte_2, 0, this.byte_2.Length);
         stream_0.Write(this.byte_4, 0, this.byte_4.Length);

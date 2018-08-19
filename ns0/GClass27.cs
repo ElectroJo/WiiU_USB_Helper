@@ -47,17 +47,17 @@ namespace ns0
       return System.IO.File.Exists(Path.Combine(Environment.GetEnvironmentVariable("windir"), "SysWOW64", string_0));
     }
 
-    public static ushort smethod_4(ushort ushort_0)
+    public static ushort ToUShortNetworkBytes(ushort ushort_0)
     {
       return (ushort) IPAddress.HostToNetworkOrder((short) ushort_0);
     }
 
-    public static uint smethod_5(uint uint_0)
+    public static uint ToUIntNetworkBytes(uint uint_0)
     {
       return (uint) IPAddress.HostToNetworkOrder((int) uint_0);
     }
 
-    public static ulong smethod_6(ulong ulong_0)
+    public static ulong ToULongNetworkBytes(ulong ulong_0)
     {
       return (ulong) IPAddress.HostToNetworkOrder((long) ulong_0);
     }

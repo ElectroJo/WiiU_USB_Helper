@@ -59,14 +59,14 @@ namespace ns0
     public void method_0(Stream stream_0)
     {
       stream_0.Seek(0L, SeekOrigin.Begin);
-      stream_0.Write(BitConverter.GetBytes(GClass27.smethod_5(this.uint_3)), 0, 4);
-      stream_0.Write(BitConverter.GetBytes(GClass27.smethod_5(this.uint_7)), 0, 4);
-      stream_0.Write(BitConverter.GetBytes(GClass27.smethod_5(this.uint_0)), 0, 4);
-      stream_0.Write(BitConverter.GetBytes(GClass27.smethod_5(this.uint_4)), 0, 4);
-      stream_0.Write(BitConverter.GetBytes(GClass27.smethod_5(this.uint_5)), 0, 4);
-      stream_0.Write(BitConverter.GetBytes(GClass27.smethod_5(this.uint_6)), 0, 4);
-      stream_0.Write(BitConverter.GetBytes(GClass27.smethod_5(this.uint_1)), 0, 4);
-      stream_0.Write(BitConverter.GetBytes(GClass27.smethod_5(this.uint_2)), 0, 4);
+      stream_0.Write(BitConverter.GetBytes(GClass27.ToUIntNetworkBytes(this.uint_3)), 0, 4);
+      stream_0.Write(BitConverter.GetBytes(GClass27.ToUIntNetworkBytes(this.uint_7)), 0, 4);
+      stream_0.Write(BitConverter.GetBytes(GClass27.ToUIntNetworkBytes(this.uint_0)), 0, 4);
+      stream_0.Write(BitConverter.GetBytes(GClass27.ToUIntNetworkBytes(this.uint_4)), 0, 4);
+      stream_0.Write(BitConverter.GetBytes(GClass27.ToUIntNetworkBytes(this.uint_5)), 0, 4);
+      stream_0.Write(BitConverter.GetBytes(GClass27.ToUIntNetworkBytes(this.uint_6)), 0, 4);
+      stream_0.Write(BitConverter.GetBytes(GClass27.ToUIntNetworkBytes(this.uint_1)), 0, 4);
+      stream_0.Write(BitConverter.GetBytes(GClass27.ToUIntNetworkBytes(this.uint_2)), 0, 4);
     }
   }
 }

@@ -156,11 +156,11 @@ namespace ns0
       return Encoding.UTF8.GetString(this.DownloadFile(string_0));
     }
 
-    public string method_7(string string_0, int int_1 = 604800)
+    public string Download_Metadata_From_Nintendo_as_XML(string URL, int int_1 = 604800)
     {
       try
       {
-        return this.Download_File_UTF8(Class67.smethod_1(string_0, int_1));
+        return this.Download_File_UTF8(Class67.smethod_1(URL, int_1));
       }
       catch (Exception ex)
       {

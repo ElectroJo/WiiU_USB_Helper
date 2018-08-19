@@ -244,7 +244,7 @@ namespace ns0
       }
     }
 
-    private void method_9(GClass30 gclass30_0, GClass100 gclass100_0, string string_0)
+    private void method_9(GClass30 gclass30_0, TMDExcractionAndProcessing gclass100_0, string string_0)
     {
       this.method_17("Computing title.cert...");
       string str = Path.Combine(string_0, "title.cert");
@@ -252,7 +252,7 @@ namespace ns0
         System.IO.File.WriteAllBytes(str, GClass96.byte_0);
       else if (gclass30_0.Platform == Platform.Wii_U_Custom)
       {
-        this.gclass78_0.method_5(string.Format("{0}cert", (object) gclass30_0.String_1), str, 0UL, GClass78.GEnum4.const_0, this.Proxy, 0L, (byte[]) null, (byte[]) null, (byte) 0);
+        this.gclass78_0.method_5(string.Format("{0}cert", (object) gclass30_0.CDN_URL_PLUS_TITLEID), str, 0UL, GClass78.GEnum4.const_0, this.Proxy, 0L, (byte[]) null, (byte[]) null, (byte) 0);
       }
       else
       {
@@ -260,7 +260,7 @@ namespace ns0
         {
           binaryWriter.Write(gclass100_0.Certificate1);
           binaryWriter.Write(gclass100_0.Certificate2);
-          binaryWriter.Write(GClass100.Byte_0);
+          binaryWriter.Write(TMDExcractionAndProcessing.Byte_0);
         }
       }
     }
@@ -272,11 +272,11 @@ namespace ns0
       if (this.Proxy != null)
         this.method_17(string.Format("Using proxy {0}", (object) this.Proxy.Address));
       if (enum0_0 == GClass80.Enum0.const_0)
-        this.gclass78_0.method_5(gclass30_0.String_1 + str, string_0 + ".h3", ulong_1, GClass78.GEnum4.const_0, this.Proxy, 0L, (byte[]) null, (byte[]) null, (byte) 0);
+        this.gclass78_0.method_5(gclass30_0.CDN_URL_PLUS_TITLEID + str, string_0 + ".h3", ulong_1, GClass78.GEnum4.const_0, this.Proxy, 0L, (byte[]) null, (byte[]) null, (byte) 0);
       else if (gclass101_0.Boolean_0)
-        this.gclass78_0.method_5(gclass30_0.String_1 + str, string_0 + ".app", ulong_1, GClass78.GEnum4.const_1, this.Proxy, (long) gclass101_0.Size.TotalBytes, System.IO.File.ReadAllBytes(string_0 + ".h3"), gclass30_0.Ticket.Byte_0, (byte) gclass101_0.Index);
+        this.gclass78_0.method_5(gclass30_0.CDN_URL_PLUS_TITLEID + str, string_0 + ".app", ulong_1, GClass78.GEnum4.const_1, this.Proxy, (long) gclass101_0.Size.TotalBytes, System.IO.File.ReadAllBytes(string_0 + ".h3"), gclass30_0.Ticket.Byte_0, (byte) gclass101_0.Index);
       else
-        this.gclass78_0.method_5(gclass30_0.String_1 + str, string_0 + ".app", ulong_1, GClass78.GEnum4.const_0, this.Proxy, (long) gclass101_0.Size.TotalBytes, (byte[]) null, (byte[]) null, (byte) 0);
+        this.gclass78_0.method_5(gclass30_0.CDN_URL_PLUS_TITLEID + str, string_0 + ".app", ulong_1, GClass78.GEnum4.const_0, this.Proxy, (long) gclass101_0.Size.TotalBytes, (byte[]) null, (byte[]) null, (byte) 0);
       return !this.gclass78_0.bool_1 ? GClass80.Enum1.const_1 : GClass80.Enum1.const_0;
     }
 
@@ -300,7 +300,7 @@ namespace ns0
         return gclass30_0.Ticket;
       }
       this.method_17("Downloading Ticket from NUS");
-      this.gclass78_0.method_5(string.Format("{0}cetk", (object) gclass30_0.String_1), str, 0UL, GClass78.GEnum4.const_0, this.Proxy, 0L, (byte[]) null, (byte[]) null, (byte) 0);
+      this.gclass78_0.method_5(string.Format("{0}cetk", (object) gclass30_0.CDN_URL_PLUS_TITLEID), str, 0UL, GClass78.GEnum4.const_0, this.Proxy, 0L, (byte[]) null, (byte[]) null, (byte) 0);
       gclass30_0.TicketArray = System.IO.File.ReadAllBytes(str);
       gclass30_0.Ticket = GClass99.smethod_6(str, gclass30_0.System);
       return gclass30_0.Ticket;
@@ -349,7 +349,7 @@ namespace ns0
         return this.method_12((GClass32) class63.gclass30_0);
       }
       // ISSUE: reference to a compiler-generated field
-      GClass100 gclass100_0 = this.method_15(class63.gclass30_0, true);
+      TMDExcractionAndProcessing gclass100_0 = this.method_15(class63.gclass30_0, true);
       // ISSUE: reference to a compiler-generated field
       GClass99 gclass99 = this.method_11(class63.gclass30_0);
       // ISSUE: reference to a compiler-generated field
@@ -556,7 +556,7 @@ label_48:
       return GClass80.Enum1.const_0;
     }
 
-    private GClass100 method_15(GClass30 gclass30_0, bool bool_5 = true)
+    private TMDExcractionAndProcessing method_15(GClass30 gclass30_0, bool bool_5 = true)
     {
       this.method_17("Downloading TMD...");
       string path = Path.Combine(gclass30_0.OutputPath, "title.tmd");
@@ -566,8 +566,8 @@ label_48:
       byte[] numArray = (byte[]) null;
       try
       {
-        numArray = !(gclass30_0 is GClass33) ? gclass78.DownloadFile(gclass30_0.String_1 + "tmd") : gclass78.DownloadFile(string.Format("{0}tmd.{1}", (object) gclass30_0.String_1, (object) gclass30_0.Version));
-        gclass30_0.Tmd = GClass100.smethod_1(numArray, gclass30_0.System);
+        numArray = !(gclass30_0 is GClass33) ? gclass78.DownloadFile(gclass30_0.CDN_URL_PLUS_TITLEID + "tmd") : gclass78.DownloadFile(string.Format("{0}tmd.{1}", (object) gclass30_0.CDN_URL_PLUS_TITLEID, (object) gclass30_0.Version));
+        gclass30_0.Tmd = TMDExcractionAndProcessing.smethod_1(numArray, gclass30_0.System);
       }
       catch (Exception ex)
       {

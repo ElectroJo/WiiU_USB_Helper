@@ -93,7 +93,7 @@ namespace ns0
             new GStruct7((GClass101) null, new List<int>(), false, true)
           }).ToList<GStruct7>();
         // ISSUE: reference to a compiler-generated field
-        GClass100 gclass100 = GClass100.smethod_0(str1, class86.gclass30_0.System);
+        TMDExcractionAndProcessing gclass100 = TMDExcractionAndProcessing.smethod_0(str1, class86.gclass30_0.System);
         // ISSUE: reference to a compiler-generated field
         // ISSUE: reference to a compiler-generated field
         // ISSUE: reference to a compiler-generated field
@@ -111,7 +111,7 @@ namespace ns0
     {
       if (gclass30_0.GEnum2_0 != GEnum2.const_2)
         throw new Exception("The title must have been downloaded!");
-      foreach (GClass101 gclass101 in GClass100.smethod_1(File.ReadAllBytes(Path.Combine(gclass30_0.OutputPath, "title.tmd")), SystemType.System3DS).GClass101_0)
+      foreach (GClass101 gclass101 in TMDExcractionAndProcessing.smethod_1(File.ReadAllBytes(Path.Combine(gclass30_0.OutputPath, "title.tmd")), SystemType.System3DS).GClass101_0)
       {
         string string_0 = Path.Combine(gclass30_0.OutputPath, gclass101.ContentId.ToString("x8") + ".app");
         Class85.smethod_6(string_0, string_0 + ".dec", gclass30_0.byte_0, Class85.smethod_9(gclass101.Index));

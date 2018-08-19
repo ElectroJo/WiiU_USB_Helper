@@ -152,7 +152,7 @@ namespace ns0
           this.chkExceptionDLC.Checked = GClass3.smethod_3((GClass30) this.gclass32_0.Dlc);
         else
           this.chkExceptionDLC.Enabled = false;
-        if (this.gclass32_0.Boolean_3)
+        if (this.gclass32_0.AreThereUpdates)
           this.chkExceptionUpdate.Checked = GClass3.smethod_3((GClass30) this.gclass32_0.Updates[0]);
         else
           this.chkExceptionUpdate.Enabled = false;

@@ -157,7 +157,7 @@ namespace ns0
     private void method_1(SystemType genum3_0)
     {
       byte[] numArray = GClass98.smethod_0(genum3_0);
-      byte[] bytes = BitConverter.GetBytes(GClass27.smethod_6(this.ulong_1));
+      byte[] bytes = BitConverter.GetBytes(GClass27.ToULongNetworkBytes(this.ulong_1));
       Array.Resize<byte>(ref bytes, 16);
       RijndaelManaged rijndaelManaged = new RijndaelManaged();
       rijndaelManaged.Mode = CipherMode.CBC;
@@ -181,7 +181,7 @@ namespace ns0
       stream_0.Seek(0L, SeekOrigin.Begin);
       byte[] buffer = new byte[8];
       stream_0.Read(buffer, 0, 4);
-      this.uint_2 = GClass27.smethod_5(BitConverter.ToUInt32(buffer, 0));
+      this.uint_2 = GClass27.ToUIntNetworkBytes(BitConverter.ToUInt32(buffer, 0));
       stream_0.Read(this.byte_13, 0, this.byte_13.Length);
       stream_0.Read(this.byte_10, 0, this.byte_10.Length);
       stream_0.Read(this.byte_7, 0, this.byte_7.Length);
@@ -189,26 +189,26 @@ namespace ns0
       stream_0.Read(this.byte_6, 0, this.byte_6.Length);
       this.byte_15 = (byte) stream_0.ReadByte();
       stream_0.Read(buffer, 0, 8);
-      this.TicketId = GClass27.smethod_6(BitConverter.ToUInt64(buffer, 0));
+      this.TicketId = GClass27.ToULongNetworkBytes(BitConverter.ToUInt64(buffer, 0));
       stream_0.Read(buffer, 0, 4);
-      this.uint_0 = GClass27.smethod_5(BitConverter.ToUInt32(buffer, 0));
+      this.uint_0 = GClass27.ToUIntNetworkBytes(BitConverter.ToUInt32(buffer, 0));
       stream_0.Read(buffer, 0, 8);
-      this.ulong_1 = GClass27.smethod_6(BitConverter.ToUInt64(buffer, 0));
+      this.ulong_1 = GClass27.ToULongNetworkBytes(BitConverter.ToUInt64(buffer, 0));
       stream_0.Read(buffer, 0, 4);
-      this.ushort_2 = GClass27.smethod_4(BitConverter.ToUInt16(buffer, 0));
-      this.NumOfDlc = GClass27.smethod_4(BitConverter.ToUInt16(buffer, 2));
+      this.ushort_2 = GClass27.ToUShortNetworkBytes(BitConverter.ToUInt16(buffer, 0));
+      this.NumOfDlc = GClass27.ToUShortNetworkBytes(BitConverter.ToUInt16(buffer, 2));
       stream_0.Read(buffer, 0, 8);
-      this.ulong_2 = GClass27.smethod_6(BitConverter.ToUInt64(buffer, 0));
+      this.ulong_2 = GClass27.ToULongNetworkBytes(BitConverter.ToUInt64(buffer, 0));
       this.byte_11 = (byte) stream_0.ReadByte();
       this.byte_4 = (byte) stream_0.ReadByte();
       this.byte_9 = this.byte_4;
       stream_0.Read(this.byte_16, 0, this.byte_16.Length);
       stream_0.Read(this.byte_17, 0, this.byte_17.Length);
       stream_0.Read(buffer, 0, 2);
-      this.ushort_1 = GClass27.smethod_4(BitConverter.ToUInt16(buffer, 0));
+      this.ushort_1 = GClass27.ToUShortNetworkBytes(BitConverter.ToUInt16(buffer, 0));
       stream_0.Read(buffer, 0, 8);
-      this.uint_1 = GClass27.smethod_5(BitConverter.ToUInt32(buffer, 0));
-      this.uint_3 = GClass27.smethod_5(BitConverter.ToUInt32(buffer, 4));
+      this.uint_1 = GClass27.ToUIntNetworkBytes(BitConverter.ToUInt32(buffer, 0));
+      this.uint_3 = GClass27.ToUIntNetworkBytes(BitConverter.ToUInt32(buffer, 4));
       stream_0.Read(this.byte_12, 0, this.byte_12.Length);
       this.method_1(genum3_0);
     }

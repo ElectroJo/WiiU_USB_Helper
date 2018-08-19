@@ -121,7 +121,7 @@ namespace ns0
         GClass28.NewUpdates = GClass28.dictionary_0.Values.Where<GClass32>((Func<GClass32, bool>) (gclass32_0 =>
         {
           if (gclass32_0.Boolean_5)
-            return gclass32_0.Boolean_3;
+            return gclass32_0.AreThereUpdates;
           return false;
         })).Select<GClass32, GClass33>((Func<GClass32, GClass33>) (gclass32_0 => gclass32_0.Updates.Last<GClass33>())).Where<GClass33>(new Func<GClass33, bool>(new GClass26.Class35()
         {
@@ -130,7 +130,7 @@ namespace ns0
       }
       GClass88.smethod_10("lastUpdates", GClass28.dictionary_0.Values.Where<GClass32>((Func<GClass32, bool>) (gclass32_0 =>
       {
-        if (!gclass32_0.Boolean_3)
+        if (!gclass32_0.AreThereUpdates)
           return false;
         if (!gclass32_0.Boolean_5)
           return gclass32_0.Boolean_1;
@@ -156,7 +156,7 @@ namespace ns0
     {
       try
       {
-        string xml = new GClass78().method_7(string_4, 7200);
+        string xml = new GClass78().Download_Metadata_From_Nintendo_as_XML(string_4, 7200);
         XmlDocument xmlDocument = new XmlDocument();
         xmlDocument.LoadXml(xml);
         foreach (XmlNode xmlNode in xmlDocument.GetElementsByTagName("description"))
@@ -226,7 +226,7 @@ namespace ns0
           switch (index.IdType)
           {
             case DownloadType.Update:
-              GClass100 gclass100 = GClass100.smethod_0(Path.Combine(directoryInfo.FullName, "title.tmd"), SystemType.SystemWiiU);
+              TMDExcractionAndProcessing gclass100 = TMDExcractionAndProcessing.smethod_0(Path.Combine(directoryInfo.FullName, "title.tmd"), SystemType.SystemWiiU);
               // ISSUE: reference to a compiler-generated field
               class36.ushort_0 = gclass100.TitleVersion;
               // ISSUE: reference to a compiler-generated method

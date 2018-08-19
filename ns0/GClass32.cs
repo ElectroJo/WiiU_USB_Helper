@@ -21,7 +21,7 @@ namespace ns0
 {
   public class GClass32 : GClass30
   {
-    private static readonly string[] string_11 = new string[9]
+    private static readonly string[] RegionList = new string[9]
     {
       "GB",
       "US",
@@ -42,8 +42,8 @@ namespace ns0
     public GClass86 gclass86_2 = new GClass86();
     private GClass74 gclass74_0;
 
-    public GClass32(string string_15, TitleId titleId_1, string string_16, byte[] byte_2, DataSize dataSize_1, List<GClass33> list_2, string string_17, string string_18, string string_19, string string_20, Platform platform_1, SystemType genum3_1)
-      : base(string_15, titleId_1, string_16, byte_2, dataSize_1, string_20, genum3_1)
+    public GClass32(string string_15, TitleId titleId_1, string string_16, byte[] byte_2, DataSize dataSize_1, List<GClass33> list_2, string string_17, string string_18, string string_19, string Nintendo_CDN_URL, Platform platform_1, SystemType genum3_1)
+      : base(string_15, titleId_1, string_16, byte_2, dataSize_1, Nintendo_CDN_URL, genum3_1)
     {
       this.EshopId = string_17;
       this.IconUrl = string_19;
@@ -74,19 +74,19 @@ namespace ns0
       }
     }
 
-    public string String_7
+    public string BoxArtURL
     {
       get
       {
-        string str = this.Region == "EUR" ? "EN" : (this.Region == "USA" ? "US" : "JA");
+        string Region = this.Region == "EUR" ? "EN" : (this.Region == "USA" ? "US" : "JA");
         switch (this.System)
         {
           case SystemType.System3DS:
-            return string.Format("http://art.gametdb.com/3ds/box/{0}/{1}.png", (object) str, (object) this.ProductId);
+            return string.Format("http://art.gametdb.com/3ds/box/{0}/{1}.png", (object) Region, (object) this.ProductId);
           case SystemType.SystemWiiU:
-            return string.Format("http://art.gametdb.com/wiiu/cover3D/{0}/{1}.png", (object) str, (object) this.ProductId);
+            return string.Format("http://art.gametdb.com/wiiu/cover3D/{0}/{1}.png", (object) Region, (object) this.ProductId);
           case SystemType.SystemWii:
-            return string.Format("http://art.gametdb.com/wii/cover3D/{0}/{1}.png", (object) str, (object) this.ProductId);
+            return string.Format("http://art.gametdb.com/wii/cover3D/{0}/{1}.png", (object) Region, (object) this.ProductId);
           default:
             throw new NotImplementedException("Unknown system");
         }
@@ -105,7 +105,7 @@ namespace ns0
       }
     }
 
-    public bool Boolean_3
+    public bool AreThereUpdates
     {
       get
       {
@@ -340,7 +340,7 @@ namespace ns0
       return (DriveInfo) null;
     }
 
-    private string method_27(string string_15)
+    private string Get_Custom_Or_Official_WiiU_JSON(string Region)
     {
       try
       {
@@ -353,14 +353,14 @@ namespace ns0
           return gclass78.Download_File_UTF8(string.Format("{0}/wii/info/json/{1}/info", (object) Class67.CDNWiiUUSBHelperURL, (object) this.TitleId.IdRaw));
         if (this.Platform == Platform.Wii_U_Custom || this.Boolean_0)
           return gclass78.Download_File_UTF8(string.Format("{0}/wiiu/info/US/{1}", (object) Class67.CDNWiiUUSBHelperURL, (object) this.TitleId.IdRaw));
-        string str1 = gclass78.method_7(string.Format("https://samurai.ctr.shop.nintendo.net/samurai/ws/{0}/title/{1}/?shop_id=2", (object) string_15, (object) this.EshopId), 604800);
+        string str1 = gclass78.Download_Metadata_From_Nintendo_as_XML(string.Format("https://samurai.ctr.shop.nintendo.net/samurai/ws/{0}/title/{1}/?shop_id=2", (object) Region, (object) this.EshopId), 604800);
         if (str1 != "")
           return str1;
-        for (; index < GClass32.string_11.Length; ++index)
+        for (; index < GClass32.RegionList.Length; ++index)
         {
-          if (GClass32.string_11[index] != string_15)
+          if (GClass32.RegionList[index] != Region)
           {
-            string str2 = gclass78.method_7(string.Format("https://samurai.ctr.shop.nintendo.net/samurai/ws/{0}/title/{1}/?shop_id=2", (object) GClass32.string_11[index], (object) this.EshopId), 604800);
+            string str2 = gclass78.Download_Metadata_From_Nintendo_as_XML(string.Format("https://samurai.ctr.shop.nintendo.net/samurai/ws/{0}/title/{1}/?shop_id=2", (object) GClass32.RegionList[index], (object) this.EshopId), 604800);
             if (str2 != "")
               return str2;
           }
@@ -385,7 +385,7 @@ namespace ns0
 
     public bool method_29(GClass30 gclass30_0)
     {
-      if (gclass30_0 == this || this.Boolean_3 && gclass30_0 == this.Updates.Last<GClass33>())
+      if (gclass30_0 == this || this.AreThereUpdates && gclass30_0 == this.Updates.Last<GClass33>())
         return true;
       if (this.Boolean_2)
         return gclass30_0 == this.Dlc;

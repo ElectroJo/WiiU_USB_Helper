@@ -51,7 +51,7 @@ namespace ns0
     {
       if (gclass32_0.gclass86_2.Image == null)
         return;
-      if (gclass32_0.Boolean_3)
+      if (gclass32_0.AreThereUpdates)
         gclass32_0.gclass86_2.Image = gclass32_0.Updates.Last<GClass33>().GEnum2_0 == GEnum2.const_2 ? GClass6.smethod_17(gclass32_0.gclass86_2.Image, (Image) Class123.hasUpdateOk, true) : GClass6.smethod_17(gclass32_0.gclass86_2.Image, (Image) Class123.hasUpdate, true);
       if (gclass32_0.Boolean_2)
         gclass32_0.gclass86_2.Image = gclass32_0.Dlc.GEnum2_0 == GEnum2.const_2 ? GClass6.smethod_17(gclass32_0.gclass86_2.Image, (Image) Class123.hasDLCOk, true) : GClass6.smethod_17(gclass32_0.gclass86_2.Image, (Image) Class123.hasDLC, true);

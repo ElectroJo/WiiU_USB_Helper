@@ -124,7 +124,7 @@ namespace NusHelper.Emulators
       if (!(this.gclass30_0 is GClass32))
         return;
       GClass32 gclass300 = (GClass32) this.gclass30_0;
-      if (!gclass300.Boolean_3 || GClass3.smethod_3((GClass30) gclass300.Updates[0]))
+      if (!gclass300.AreThereUpdates || GClass3.smethod_3((GClass30) gclass300.Updates[0]))
         return;
       bool flag = false;
       try

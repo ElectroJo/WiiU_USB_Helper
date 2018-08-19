@@ -11,6 +11,6 @@ namespace ns0
     public GClass95 gclass95_0;
     public string string_0;
     public GClass30 gclass30_0;
-    public GClass100 gclass100_0;
+    public TMDExcractionAndProcessing gclass100_0;
   }
 }

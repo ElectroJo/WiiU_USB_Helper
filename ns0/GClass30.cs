@@ -34,7 +34,7 @@ namespace ns0
     public string string_1;
     public bool bool_0;
 
-    protected GClass30(string string_7, TitleId titleId_1, string string_8, byte[] byte_2, DataSize dataSize_1, string string_9, SystemType genum3_1)
+    protected GClass30(string string_7, TitleId titleId_1, string string_8, byte[] byte_2, DataSize dataSize_1, string CDN_URL_MAYBE, SystemType genum3_1)
     {
       this.Name = string_7;
       this.TitleId = titleId_1;
@@ -43,7 +43,7 @@ namespace ns0
       if (this.TicketArray != null)
         this.Ticket = GClass99.smethod_7(byte_2, genum3_1);
       this.Size = dataSize_1;
-      this.RootDownloadLocation = string_9;
+      this.RootDownloadLocation = CDN_URL_MAYBE;
       this.System = genum3_1;
     }
 
@@ -123,7 +123,7 @@ namespace ns0
 
     public SystemType System { get; internal set; }
 
-    public string String_1
+    public string CDN_URL_PLUS_TITLEID
     {
       get
       {
@@ -157,7 +157,7 @@ namespace ns0
 
     public TitleId TitleId { get; }
 
-    public GClass100 Tmd { get; set; }
+    public TMDExcractionAndProcessing Tmd { get; set; }
 
     public bool CurrentlyDownloaded { get; internal set; }
 
@@ -608,9 +608,9 @@ namespace ns0
     {
       if (this.System != SystemType.SystemWiiU)
         throw new Exception("The FST can only be retrieved for WUP titles.");
-      GClass100 gclass100 = !(this is GClass33) ? GClass100.smethod_1(new GClass78().DownloadFile(string.Format("{0}tmd", (object) this.String_1)), SystemType.SystemWiiU) : GClass100.smethod_1(new GClass78().DownloadFile(string.Format("{0}tmd.{1}", (object) this.String_1, (object) this.Version)), SystemType.SystemWiiU);
-      GClass99 gclass99 = this is GClass33 || this.Platform == Platform.Wii_U_Custom ? GClass99.smethod_7(new GClass78().DownloadFile(this.String_1 + "cetk"), SystemType.SystemWiiU) : (!this.bool_0 ? GClass99.smethod_7(this.TicketArray, SystemType.SystemWiiU) : GClass99.smethod_7(File.ReadAllBytes(Path.Combine(Path.Combine(GClass88.DirectoryCache, "tickets"), this.TitleId.IdRaw + ".tik")), SystemType.SystemWiiU));
-      byte[] inputBuffer = new GClass78().DownloadFile(this.String_1 + gclass100.GClass101_0[0].ContentId.ToString("x8"));
+      TMDExcractionAndProcessing gclass100 = !(this is GClass33) ? TMDExcractionAndProcessing.smethod_1(new GClass78().DownloadFile(string.Format("{0}tmd", (object) this.CDN_URL_PLUS_TITLEID)), SystemType.SystemWiiU) : TMDExcractionAndProcessing.smethod_1(new GClass78().DownloadFile(string.Format("{0}tmd.{1}", (object) this.CDN_URL_PLUS_TITLEID, (object) this.Version)), SystemType.SystemWiiU);
+      GClass99 gclass99 = this is GClass33 || this.Platform == Platform.Wii_U_Custom ? GClass99.smethod_7(new GClass78().DownloadFile(this.CDN_URL_PLUS_TITLEID + "cetk"), SystemType.SystemWiiU) : (!this.bool_0 ? GClass99.smethod_7(this.TicketArray, SystemType.SystemWiiU) : GClass99.smethod_7(File.ReadAllBytes(Path.Combine(Path.Combine(GClass88.DirectoryCache, "tickets"), this.TitleId.IdRaw + ".tik")), SystemType.SystemWiiU));
+      byte[] inputBuffer = new GClass78().DownloadFile(this.CDN_URL_PLUS_TITLEID + gclass100.GClass101_0[0].ContentId.ToString("x8"));
       using (AesCryptoServiceProvider cryptoServiceProvider = new AesCryptoServiceProvider())
       {
         cryptoServiceProvider.Key = gclass99.Byte_0;
@@ -832,9 +832,9 @@ namespace ns0
     {
       if (!Directory.Exists(this.OutputPath) || !File.Exists(Path.Combine(this.OutputPath, "title.tmd")) || !File.Exists(Path.Combine(this.OutputPath, "title.tik")) || (this.System == SystemType.SystemWiiU || this.System == SystemType.SystemWii) && !File.Exists(Path.Combine(this.OutputPath, "title.cert")))
         return GEnum2.const_0;
-      if ((this is GClass31 || this.Platform == Platform.Wii_U_Custom) && !new GClass78().DownloadFile(this.String_1 + "tmd").smethod_5(File.ReadAllBytes(Path.Combine(this.OutputPath, "title.tmd"))))
+      if ((this is GClass31 || this.Platform == Platform.Wii_U_Custom) && !new GClass78().DownloadFile(this.CDN_URL_PLUS_TITLEID + "tmd").smethod_5(File.ReadAllBytes(Path.Combine(this.OutputPath, "title.tmd"))))
         return GEnum2.const_1;
-      foreach (GClass101 gclass101 in GClass100.smethod_0(Path.Combine(this.OutputPath, "title.tmd"), this.System).GClass101_0)
+      foreach (GClass101 gclass101 in TMDExcractionAndProcessing.smethod_0(Path.Combine(this.OutputPath, "title.tmd"), this.System).GClass101_0)
       {
         string outputPath1 = this.OutputPath;
         uint contentId = gclass101.ContentId;

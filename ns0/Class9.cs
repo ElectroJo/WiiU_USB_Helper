@@ -23,7 +23,7 @@ namespace ns0
     private int int_0;
     private GClass13 gclass13_0;
     private GClass99 gclass99_0;
-    private GClass100 gclass100_0;
+    private TMDExcractionAndProcessing gclass100_0;
     private int int_1;
     private ulong ulong_0;
     private ulong ulong_1;
@@ -43,7 +43,7 @@ namespace ns0
     {
       if (this.gclass100_0 == null || this.gclass99_0 == null)
       {
-        this.gclass100_0 = GClass100.smethod_1(new GClass78().DownloadFile(this.gclass30_0.String_1 + "tmd"), SystemType.SystemWiiU);
+        this.gclass100_0 = TMDExcractionAndProcessing.smethod_1(new GClass78().DownloadFile(this.gclass30_0.CDN_URL_PLUS_TITLEID + "tmd"), SystemType.SystemWiiU);
         this.gclass99_0 = this.method_5();
       }
       if (gclass12_0.bool_1 || gclass12_0.bool_0)
@@ -95,7 +95,7 @@ namespace ns0
       Stream responseStream;
       if (bool_0)
       {
-        HttpWebRequest httpWebRequest = (HttpWebRequest) WebRequest.Create(this.gclass30_0.String_1 + contentId.ToString("x8"));
+        HttpWebRequest httpWebRequest = (HttpWebRequest) WebRequest.Create(this.gclass30_0.CDN_URL_PLUS_TITLEID + contentId.ToString("x8"));
         httpWebRequest.Method = "GET";
         httpWebRequest.AddRange((long) num3);
         responseStream = httpWebRequest.GetResponse().GetResponseStream();
@@ -163,7 +163,7 @@ namespace ns0
       Stream responseStream;
       if (bool_0)
       {
-        HttpWebRequest httpWebRequest = (HttpWebRequest) WebRequest.Create(this.gclass30_0.String_1 + contentId.ToString("x8"));
+        HttpWebRequest httpWebRequest = (HttpWebRequest) WebRequest.Create(this.gclass30_0.CDN_URL_PLUS_TITLEID + contentId.ToString("x8"));
         httpWebRequest.AddRange((long) uint1);
         responseStream = httpWebRequest.GetResponse().GetResponseStream();
       }
@@ -204,17 +204,17 @@ namespace ns0
     private GClass99 method_5()
     {
       if (this.gclass30_0 is GClass33 || this.gclass30_0.Platform == Platform.Wii_U_Custom)
-        return GClass99.smethod_7(new GClass78().DownloadFile(this.gclass30_0.String_1 + "cetk"), SystemType.SystemWiiU);
+        return GClass99.smethod_7(new GClass78().DownloadFile(this.gclass30_0.CDN_URL_PLUS_TITLEID + "cetk"), SystemType.SystemWiiU);
       if (this.gclass30_0.bool_0)
         return GClass99.smethod_7(new GClass78().DownloadFile(this.gclass30_0.string_0), SystemType.SystemWiiU);
       return GClass99.smethod_7(this.gclass30_0.TicketArray, SystemType.SystemWiiU);
     }
 
-    private GClass100 method_6()
+    private TMDExcractionAndProcessing method_6()
     {
       if (this.gclass30_0 is GClass33)
-        return GClass100.smethod_1(new GClass78().DownloadFile(string.Format("{0}tmd.{1}", (object) this.gclass30_0.String_1, (object) this.gclass30_0.Version)), SystemType.SystemWiiU);
-      return GClass100.smethod_1(new GClass78().DownloadFile(string.Format("{0}tmd", (object) this.gclass30_0.String_1)), SystemType.SystemWiiU);
+        return TMDExcractionAndProcessing.smethod_1(new GClass78().DownloadFile(string.Format("{0}tmd.{1}", (object) this.gclass30_0.CDN_URL_PLUS_TITLEID, (object) this.gclass30_0.Version)), SystemType.SystemWiiU);
+      return TMDExcractionAndProcessing.smethod_1(new GClass78().DownloadFile(string.Format("{0}tmd", (object) this.gclass30_0.CDN_URL_PLUS_TITLEID)), SystemType.SystemWiiU);
     }
 
     private long method_7(long long_0, long long_1)

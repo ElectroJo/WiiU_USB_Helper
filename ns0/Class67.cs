@@ -89,9 +89,9 @@ namespace ns0
       }
     }
 
-    public static string smethod_1(string string_2, int int_1)
+    public static string smethod_1(string URL, int int_1)
     {
-      return string.Format("{0}/proxy.php?url=", (object) Class67.ApplicationWiiUUSBHelperURL) + Convert.ToBase64String(Encoding.UTF8.GetBytes(string_2)) + "&cache=" + int_1.ToString();
+      return string.Format("{0}/proxy.php?url=", (object) Class67.ApplicationWiiUUSBHelperURL) + Convert.ToBase64String(Encoding.UTF8.GetBytes(URL)) + "&cache=" + int_1.ToString();
     }
 
     public static List<string> smethod_2()
