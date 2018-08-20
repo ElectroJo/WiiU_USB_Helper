@@ -14,23 +14,23 @@ namespace ns0
 {
   public sealed class TMDExcractionAndProcessing : IDisposable
   {
-    private byte[] byte_3 = new byte[64];
-    private byte[] byte_4 = new byte[60];
-    private byte[] byte_6 = new byte[58];
-    private byte[] byte_7 = new byte[256];
-    private uint uint_1 = 65537;
-    private uint uint_0;
-    private ushort ushort_2;
-    private byte byte_2;
+    private byte[] SignatureIssuer = new byte[64];
+    private byte[] TMD_Signature_Padding = new byte[60];
+    private byte[] SkippedSLRData = new byte[58];
+    private byte[] TMD_Signature = new byte[256];
+    private uint TMD_Signature__Type_as_Int = 65537;
+    private uint AccessRights;
+    private ushort BootContent;
+    private byte ca_crl_version;
     private List<GClass101> list_0;
-    private ushort ushort_3;
-    private ushort ushort_4;
-    private ushort ushort_5;
-    private byte byte_5;
-    private ushort ushort_6;
-    private byte byte_8;
-    private uint uint_2;
-    private byte byte_9;
+    private ushort GroupID;
+    private ushort Save_Data_Size_pt1;
+    private ushort Padding;
+    private byte Reserved;
+    private ushort Save_Data_Size_pt2;
+    private byte signer_crl_version;
+    private uint TitleType;
+    private byte Version;
     private bool bool_0;
 
     public static byte[] Byte_0
@@ -41,9 +41,9 @@ namespace ns0
       }
     }
 
-    public byte[] Certificate1 { get; } = new byte[1024];
+    public byte[] Certificate1 { get; } = new byte[1024]; //Probably CA CERT used to verify the TMD Cert
 
-    public byte[] Certificate2 { get; } = new byte[768];
+    public byte[] Certificate2 { get; } = new byte[768]; //Probably TMD CERT used to verify the TMD sig
 
     public GClass101[] GClass101_0
     {
@@ -64,39 +64,39 @@ namespace ns0
 
     public ushort TitleVersion { get; set; }
 
-    private void method_0(Stream TMD_Stream, SystemType SystemType)
-    {
+    private void method_0(Stream TMD_Stream, SystemType SystemType) //Information located: https://3dbrew.org/wiki/Title_metadata#Signature_Type
+        {
       TMD_Stream.Seek(0L, SeekOrigin.Begin);
       byte[] buffer1 = new byte[8];
-      TMD_Stream.Read(buffer1, 0, 4); //Reads the Signature Type https://3dbrew.org/wiki/Title_metadata#Signature_Type
-      this.uint_1 = GClass27.ToUIntNetworkBytes(BitConverter.ToUInt32(buffer1, 0));
-      TMD_Stream.Read(this.byte_7, 0, this.byte_7.Length); //Maybe Reads the signature?
-      TMD_Stream.Read(this.byte_4, 0, this.byte_4.Length);
-      TMD_Stream.Read(this.byte_3, 0, this.byte_3.Length);
       TMD_Stream.Read(buffer1, 0, 4);
-      this.byte_9 = buffer1[0];
-      this.byte_2 = buffer1[1];
-      this.byte_8 = buffer1[2];
-      this.byte_5 = buffer1[3];
-      TMD_Stream.Read(buffer1, 0, 8); //Reads past System Version
-      TMD_Stream.Read(buffer1, 0, 8); //Reads Title ID
-      this.TitleId = GClass27.ToULongNetworkBytes(BitConverter.ToUInt64(buffer1, 0)); //Stores Title ID
-      TMD_Stream.Read(buffer1, 0, 4); //Reads Title Type?
-      this.uint_2 = GClass27.ToUIntNetworkBytes(BitConverter.ToUInt32(buffer1, 0)); //Stores Title Type
-      TMD_Stream.Read(buffer1, 0, 2); //Group ID
-      this.ushort_3 = GClass27.ToUShortNetworkBytes(BitConverter.ToUInt16(buffer1, 0));
-      TMD_Stream.Read(buffer1, 0, 2); 
-      this.ushort_4 = GClass27.ToUShortNetworkBytes(BitConverter.ToUInt16(buffer1, 0));
-      TMD_Stream.Read(buffer1, 0, 2); 
-      this.ushort_6 = GClass27.ToUShortNetworkBytes(BitConverter.ToUInt16(buffer1, 0));
-      TMD_Stream.Read(this.byte_6, 0, this.byte_6.Length);
+      this.TMD_Signature__Type_as_Int = GClass27.ToUIntNetworkBytes(BitConverter.ToUInt32(buffer1, 0));
+      TMD_Stream.Read(this.TMD_Signature, 0, this.TMD_Signature.Length);
+      TMD_Stream.Read(this.TMD_Signature_Padding, 0, this.TMD_Signature_Padding.Length);
+      TMD_Stream.Read(this.SignatureIssuer, 0, this.SignatureIssuer.Length);
       TMD_Stream.Read(buffer1, 0, 4);
-      this.uint_0 = GClass27.ToUIntNetworkBytes(BitConverter.ToUInt32(buffer1, 0));
+      this.Version = buffer1[0];
+      this.ca_crl_version = buffer1[1];
+      this.signer_crl_version = buffer1[2];
+      this.Reserved = buffer1[3];
+      TMD_Stream.Read(buffer1, 0, 8); //Skip System Version
+      TMD_Stream.Read(buffer1, 0, 8); //Read Title ID
+      this.TitleId = GClass27.ToULongNetworkBytes(BitConverter.ToUInt64(buffer1, 0)); 
+      TMD_Stream.Read(buffer1, 0, 4); //Read Title Type (e.g. DSIWare, ESHOP, etc I think) 
+      this.TitleType = GClass27.ToUIntNetworkBytes(BitConverter.ToUInt32(buffer1, 0)); 
+      TMD_Stream.Read(buffer1, 0, 2);  //Read Group ID
+      this.GroupID = GClass27.ToUShortNetworkBytes(BitConverter.ToUInt16(buffer1, 0));
+      TMD_Stream.Read(buffer1, 0, 2); //Read half of Save Data Size (Bytes) (Also SRL Public Save Data Size)?
+      this.Save_Data_Size_pt1 = GClass27.ToUShortNetworkBytes(BitConverter.ToUInt16(buffer1, 0));
+      TMD_Stream.Read(buffer1, 0, 2); //Read second half of Save Data Size (Bytes) (Also SRL Public Save Data Size)?
+      this.Save_Data_Size_pt2 = GClass27.ToUShortNetworkBytes(BitConverter.ToUInt16(buffer1, 0));
+      TMD_Stream.Read(this.SkippedSLRData, 0, this.SkippedSLRData.Length);  //Skips SLR Private Save, Reserved, SLR Flag, and Reserved
+      TMD_Stream.Read(buffer1, 0, 4); //Reads Access Rights
+      this.AccessRights = GClass27.ToUIntNetworkBytes(BitConverter.ToUInt32(buffer1, 0));
       TMD_Stream.Read(buffer1, 0, 8); //Read Title Version, Content Count, Boot Content, and Padding
       this.TitleVersion = GClass27.ToUShortNetworkBytes(BitConverter.ToUInt16(buffer1, 0));
       this.NumOfContents = GClass27.ToUShortNetworkBytes(BitConverter.ToUInt16(buffer1, 2));
-      this.ushort_2 = GClass27.ToUShortNetworkBytes(BitConverter.ToUInt16(buffer1, 4)); //Probably Boot Content
-      this.ushort_5 = GClass27.ToUShortNetworkBytes(BitConverter.ToUInt16(buffer1, 6)); //Probably Padding?
+      this.BootContent = GClass27.ToUShortNetworkBytes(BitConverter.ToUInt16(buffer1, 4)); //Probably Boot Content
+      this.Padding = GClass27.ToUShortNetworkBytes(BitConverter.ToUInt16(buffer1, 6)); //Probably Padding?
       if (SystemType != SystemType.SystemWii)
         TMD_Stream.Position = 2820L;
       this.list_0 = new List<GClass101>();
@@ -137,23 +137,23 @@ namespace ns0
 
     public void Dispose()
     {
-      this.method_1(true);
+      this.IfTrueWipeCacheOfTMD(true);
       GC.SuppressFinalize((object) this);
     }
 
     ~TMDExcractionAndProcessing()
     {
-      this.method_1(false);
+      this.IfTrueWipeCacheOfTMD(false);
     }
 
-    private void method_1(bool Should_Wipe_Vars_Bool)
+    private void IfTrueWipeCacheOfTMD(bool Should_Wipe_Vars_Bool)
     {
       if (Should_Wipe_Vars_Bool && !this.bool_0)
       {
-        this.byte_7 = (byte[]) null;
-        this.byte_4 = (byte[]) null;
-        this.byte_3 = (byte[]) null;
-        this.byte_6 = (byte[]) null;
+        this.TMD_Signature = (byte[]) null;
+        this.TMD_Signature_Padding = (byte[]) null;
+        this.SignatureIssuer = (byte[]) null;
+        this.SkippedSLRData = (byte[]) null;
         this.list_0.Clear();
         this.list_0 = (List<GClass101>) null;
       }
