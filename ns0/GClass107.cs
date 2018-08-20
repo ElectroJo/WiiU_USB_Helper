@@ -51,8 +51,8 @@ namespace ns0
     {
       int num1 = 0;
       for (int index = 0; index < this.gclass100_0.GClass101_0.Length - 1; ++index)
-        num1 += GClass27.smethod_0((int) this.gclass100_0.GClass101_0[index].Size.TotalBytes, 64);
-      this.gclass108_0.UInt32_0 = (uint) num1 + (uint) (int) this.gclass100_0.GClass101_0[this.gclass100_0.GClass101_0.Length - 1].Size.TotalBytes;
+        num1 += GClass27.smethod_0((int) this.gclass100_0.GClass101_0[index].ContentSize.TotalBytes, 64);
+      this.gclass108_0.UInt32_0 = (uint) num1 + (uint) (int) this.gclass100_0.GClass101_0[this.gclass100_0.GClass101_0.Length - 1].ContentSize.TotalBytes;
       byte[] buffer1 = File.ReadAllBytes(this.string_2);
       byte[] buffer2 = File.ReadAllBytes(this.string_0);
       byte[] numArray = File.ReadAllBytes(this.string_1);

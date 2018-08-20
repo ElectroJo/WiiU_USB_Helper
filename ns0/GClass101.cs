@@ -34,9 +34,9 @@ namespace ns0
 
     public ushort Index { get; set; }
 
-    public DataSize Size { get; set; }
+    public DataSize ContentSize { get; set; }
 
-    public GEnum6 GEnum6_0
+    public GEnum6 ContentType
     {
       get
       {

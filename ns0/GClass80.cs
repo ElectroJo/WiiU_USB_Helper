@@ -274,9 +274,9 @@ namespace ns0
       if (enum0_0 == GClass80.Enum0.const_0)
         this.gclass78_0.method_5(gclass30_0.CDN_URL_PLUS_TITLEID + str, string_0 + ".h3", ulong_1, GClass78.GEnum4.const_0, this.Proxy, 0L, (byte[]) null, (byte[]) null, (byte) 0);
       else if (gclass101_0.Boolean_0)
-        this.gclass78_0.method_5(gclass30_0.CDN_URL_PLUS_TITLEID + str, string_0 + ".app", ulong_1, GClass78.GEnum4.const_1, this.Proxy, (long) gclass101_0.Size.TotalBytes, System.IO.File.ReadAllBytes(string_0 + ".h3"), gclass30_0.Ticket.Byte_0, (byte) gclass101_0.Index);
+        this.gclass78_0.method_5(gclass30_0.CDN_URL_PLUS_TITLEID + str, string_0 + ".app", ulong_1, GClass78.GEnum4.const_1, this.Proxy, (long) gclass101_0.ContentSize.TotalBytes, System.IO.File.ReadAllBytes(string_0 + ".h3"), gclass30_0.Ticket.Byte_0, (byte) gclass101_0.Index);
       else
-        this.gclass78_0.method_5(gclass30_0.CDN_URL_PLUS_TITLEID + str, string_0 + ".app", ulong_1, GClass78.GEnum4.const_0, this.Proxy, (long) gclass101_0.Size.TotalBytes, (byte[]) null, (byte[]) null, (byte) 0);
+        this.gclass78_0.method_5(gclass30_0.CDN_URL_PLUS_TITLEID + str, string_0 + ".app", ulong_1, GClass78.GEnum4.const_0, this.Proxy, (long) gclass101_0.ContentSize.TotalBytes, (byte[]) null, (byte[]) null, (byte) 0);
       return !this.gclass78_0.bool_1 ? GClass80.Enum1.const_1 : GClass80.Enum1.const_0;
     }
 
@@ -375,7 +375,7 @@ label_7:
         while (true)
         {
           gclass101_0 = gclass100_0.GClass101_0[index];
-          this.method_17(string.Format("Downloading Content #{0} ({1:x8}) of {2}... ({3})", (object) (index + 1), (object) gclass101_0.ContentId, (object) gclass100_0.NumOfContents, (object) gclass101_0.Size));
+          this.method_17(string.Format("Downloading Content #{0} ({1:x8}) of {2}... ({3})", (object) (index + 1), (object) gclass101_0.ContentId, (object) gclass100_0.NumOfContents, (object) gclass101_0.ContentSize));
           // ISSUE: reference to a compiler-generated field
           string string_0 = Path.Combine(class63.gclass30_0.OutputPath, gclass101_0.ContentId.ToString("x8"));
           ulong num1 = 0;
@@ -408,7 +408,7 @@ label_9:
                 if (System.IO.File.Exists(path) && System.IO.File.Exists(str2) && System.IO.File.ReadAllBytes(path).smethod_5(System.IO.File.ReadAllBytes(string_0 + ".h3")))
                 {
                   long length = new FileInfo(str2).Length;
-                  size = gclass101_0.Size;
+                  size = gclass101_0.ContentSize;
                   long totalBytes1 = (long) size.TotalBytes;
                   if (length == totalBytes1)
                   {
@@ -416,10 +416,10 @@ label_9:
                     System.IO.File.Copy(str2, string_0 + ".app", true);
                     GClass78 gclass780 = this.gclass78_0;
                     DataSize downloadedCurrentGame = gclass780.TotalDownloadedCurrentGame;
-                    size = gclass101_0.Size;
+                    size = gclass101_0.ContentSize;
                     long totalBytes2 = (long) size.TotalBytes;
                     gclass780.TotalDownloadedCurrentGame = downloadedCurrentGame + (ulong) totalBytes2;
-                    this.gclass78_0.TotalDataDownloaded += gclass101_0.Size;
+                    this.gclass78_0.TotalDataDownloaded += gclass101_0.ContentSize;
                     flag2 = true;
                     break;
                   }
@@ -445,8 +445,8 @@ label_9:
                 this.method_13(false);
                 if (!gstruct7.Boolean_0)
                 {
-                  this.gclass78_0.TotalDataDownloaded -= gclass101_0.Size;
-                  this.gclass78_0.TotalDownloadedCurrentGame -= gclass101_0.Size;
+                  this.gclass78_0.TotalDataDownloaded -= gclass101_0.ContentSize;
+                  this.gclass78_0.TotalDownloadedCurrentGame -= gclass101_0.ContentSize;
                   continue;
                 }
                 goto label_7;
@@ -482,7 +482,7 @@ label_35:
           num1 = (ulong) new FileInfo(string_0 + ".app").Length;
           this.method_17("Local file detected. Checking size...");
           long num4 = (long) num1;
-          size = gclass101_0.Size;
+          size = gclass101_0.ContentSize;
           long totalBytes = (long) size.TotalBytes;
           if (num4 == totalBytes)
           {
@@ -525,7 +525,7 @@ label_35:
           }
           else
           {
-            size = gclass101_0.Size;
+            size = gclass101_0.ContentSize;
             if (size.TotalBytes < num1)
             {
               this.method_17("This file does not qualify for intelligent resuming. Redownloading...");
@@ -541,10 +541,10 @@ label_35:
         this.method_17("This file is good, skipping...");
         GClass78 gclass780_1 = this.gclass78_0;
         DataSize downloadedCurrentGame1 = gclass780_1.TotalDownloadedCurrentGame;
-        size = gclass101_0.Size;
+        size = gclass101_0.ContentSize;
         long totalBytes3 = (long) size.TotalBytes;
         gclass780_1.TotalDownloadedCurrentGame = downloadedCurrentGame1 + (ulong) totalBytes3;
-        this.gclass78_0.TotalDataDownloaded += gclass101_0.Size;
+        this.gclass78_0.TotalDataDownloaded += gclass101_0.ContentSize;
         continue;
 label_48:
         GC.Collect();
@@ -567,7 +567,7 @@ label_48:
       try
       {
         numArray = !(gclass30_0 is GClass33) ? gclass78.DownloadFile(gclass30_0.CDN_URL_PLUS_TITLEID + "tmd") : gclass78.DownloadFile(string.Format("{0}tmd.{1}", (object) gclass30_0.CDN_URL_PLUS_TITLEID, (object) gclass30_0.Version));
-        gclass30_0.Tmd = TMDExcractionAndProcessing.smethod_1(numArray, gclass30_0.System);
+        gclass30_0.Tmd = TMDExcractionAndProcessing.ReadTMDBytes(numArray, gclass30_0.System);
       }
       catch (Exception ex)
       {

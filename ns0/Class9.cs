@@ -43,7 +43,7 @@ namespace ns0
     {
       if (this.gclass100_0 == null || this.gclass99_0 == null)
       {
-        this.gclass100_0 = TMDExcractionAndProcessing.smethod_1(new GClass78().DownloadFile(this.gclass30_0.CDN_URL_PLUS_TITLEID + "tmd"), SystemType.SystemWiiU);
+        this.gclass100_0 = TMDExcractionAndProcessing.ReadTMDBytes(new GClass78().DownloadFile(this.gclass30_0.CDN_URL_PLUS_TITLEID + "tmd"), SystemType.SystemWiiU);
         this.gclass99_0 = this.method_5();
       }
       if (gclass12_0.bool_1 || gclass12_0.bool_0)
@@ -213,8 +213,8 @@ namespace ns0
     private TMDExcractionAndProcessing method_6()
     {
       if (this.gclass30_0 is GClass33)
-        return TMDExcractionAndProcessing.smethod_1(new GClass78().DownloadFile(string.Format("{0}tmd.{1}", (object) this.gclass30_0.CDN_URL_PLUS_TITLEID, (object) this.gclass30_0.Version)), SystemType.SystemWiiU);
-      return TMDExcractionAndProcessing.smethod_1(new GClass78().DownloadFile(string.Format("{0}tmd", (object) this.gclass30_0.CDN_URL_PLUS_TITLEID)), SystemType.SystemWiiU);
+        return TMDExcractionAndProcessing.ReadTMDBytes(new GClass78().DownloadFile(string.Format("{0}tmd.{1}", (object) this.gclass30_0.CDN_URL_PLUS_TITLEID, (object) this.gclass30_0.Version)), SystemType.SystemWiiU);
+      return TMDExcractionAndProcessing.ReadTMDBytes(new GClass78().DownloadFile(string.Format("{0}tmd", (object) this.gclass30_0.CDN_URL_PLUS_TITLEID)), SystemType.SystemWiiU);
     }
 
     private long method_7(long long_0, long long_1)

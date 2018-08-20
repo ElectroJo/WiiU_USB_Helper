@@ -42,7 +42,7 @@ namespace ns0
     }
 
     public byte[] Certificate1 { get; } = new byte[1024]; //Probably CA CERT used to verify the TMD Cert
-
+                                                           //These may be swapped, I havn't checked yet
     public byte[] Certificate2 { get; } = new byte[768]; //Probably TMD CERT used to verify the TMD sig
 
     public GClass101[] GClass101_0
@@ -95,10 +95,10 @@ namespace ns0
       TMD_Stream.Read(buffer1, 0, 8); //Read Title Version, Content Count, Boot Content, and Padding
       this.TitleVersion = GClass27.ToUShortNetworkBytes(BitConverter.ToUInt16(buffer1, 0));
       this.NumOfContents = GClass27.ToUShortNetworkBytes(BitConverter.ToUInt16(buffer1, 2));
-      this.BootContent = GClass27.ToUShortNetworkBytes(BitConverter.ToUInt16(buffer1, 4)); //Probably Boot Content
-      this.Padding = GClass27.ToUShortNetworkBytes(BitConverter.ToUInt16(buffer1, 6)); //Probably Padding?
+      this.BootContent = GClass27.ToUShortNetworkBytes(BitConverter.ToUInt16(buffer1, 4)); 
+      this.Padding = GClass27.ToUShortNetworkBytes(BitConverter.ToUInt16(buffer1, 6)); 
       if (SystemType != SystemType.SystemWii)
-        TMD_Stream.Position = 2820L;
+        TMD_Stream.Position = 2820L; //Skips to Hex 0xB02
       this.list_0 = new List<GClass101>();
       for (int index = 0; index < (int) this.NumOfContents; ++index)
       {
@@ -107,22 +107,22 @@ namespace ns0
         {
           if (SystemType != SystemType.System3DS)
             throw new NotImplementedException();
-          GClass102 gclass102 = new GClass102();
-          gclass102.Hash = new byte[32];
-          gclass101 = (GClass101) gclass102;
+          A_3DS_CND_File_Hash A_3DS_CDN_File_Hash = new A_3DS_CND_File_Hash();
+          A_3DS_CDN_File_Hash.Hash = new byte[32];
+          gclass101 = (GClass101) A_3DS_CDN_File_Hash;
         }
         else
         {
-          GClass103 gclass103 = new GClass103();
-          gclass103.Hash = new byte[20];
-          gclass101 = (GClass101) gclass103;
+          A_WiiU_CDN_File_Hash A_WiiU_CDN_File_Hash = new A_WiiU_CDN_File_Hash();
+          A_WiiU_CDN_File_Hash.Hash = new byte[20];
+          gclass101 = (GClass101) A_WiiU_CDN_File_Hash;
         }
         TMD_Stream.Read(buffer1, 0, 8);
         gclass101.ContentId = GClass27.ToUIntNetworkBytes(BitConverter.ToUInt32(buffer1, 0));
         gclass101.Index = GClass27.ToUShortNetworkBytes(BitConverter.ToUInt16(buffer1, 4));
-        gclass101.GEnum6_0 = (GEnum6) GClass27.ToUShortNetworkBytes(BitConverter.ToUInt16(buffer1, 6));
+        gclass101.ContentType = (GEnum6) GClass27.ToUShortNetworkBytes(BitConverter.ToUInt16(buffer1, 6));
         TMD_Stream.Read(buffer1, 0, 8);
-        gclass101.Size = new DataSize(GClass27.ToULongNetworkBytes(BitConverter.ToUInt64(buffer1, 0)));
+        gclass101.ContentSize = new DataSize(GClass27.ToULongNetworkBytes(BitConverter.ToUInt64(buffer1, 0)));
         TMD_Stream.Read(gclass101.Hash, 0, gclass101.Hash.Length);
         this.list_0.Add(gclass101);
         if (SystemType == SystemType.SystemWiiU)
@@ -164,19 +164,19 @@ namespace ns0
     {
       get
       {
-        return ((IEnumerable<GClass101>) this.GClass101_0).Aggregate<GClass101, DataSize>(new DataSize(0UL), (Func<DataSize, GClass101, DataSize>) ((dataSize_0, gclass101_0) => dataSize_0 + (gclass101_0.Size + 20UL * (gclass101_0.Size.TotalBytes / 256000000UL))));
+        return ((IEnumerable<GClass101>) this.GClass101_0).Aggregate<GClass101, DataSize>(new DataSize(0UL), (Func<DataSize, GClass101, DataSize>) ((dataSize_0, gclass101_0) => dataSize_0 + (gclass101_0.ContentSize + 20UL * (gclass101_0.ContentSize.TotalBytes / 256000000UL))));
       }
     }
 
-    public static TMDExcractionAndProcessing smethod_0(string string_0, SystemType SystemType)
+    public static TMDExcractionAndProcessing smethod_0(string Nintendo_TMD_File, SystemType SystemType)
     {
-      return TMDExcractionAndProcessing.smethod_1(File.ReadAllBytes(string_0), SystemType);
+      return TMDExcractionAndProcessing.ReadTMDBytes(File.ReadAllBytes(Nintendo_TMD_File), SystemType);
     }
 
-    public static TMDExcractionAndProcessing smethod_1(byte[] Nintendo_TMD, SystemType SystemType)
+    public static TMDExcractionAndProcessing ReadTMDBytes(byte[] Nintendo_TMD_Bytes, SystemType SystemType)
     {
       TMDExcractionAndProcessing gclass100 = new TMDExcractionAndProcessing();
-      MemoryStream TMD_MemoryStream = new MemoryStream(Nintendo_TMD);
+      MemoryStream TMD_MemoryStream = new MemoryStream(Nintendo_TMD_Bytes);
       try
       {
         gclass100.method_0((Stream) TMD_MemoryStream, SystemType);

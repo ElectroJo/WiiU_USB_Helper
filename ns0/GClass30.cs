@@ -608,7 +608,7 @@ namespace ns0
     {
       if (this.System != SystemType.SystemWiiU)
         throw new Exception("The FST can only be retrieved for WUP titles.");
-      TMDExcractionAndProcessing gclass100 = !(this is GClass33) ? TMDExcractionAndProcessing.smethod_1(new GClass78().DownloadFile(string.Format("{0}tmd", (object) this.CDN_URL_PLUS_TITLEID)), SystemType.SystemWiiU) : TMDExcractionAndProcessing.smethod_1(new GClass78().DownloadFile(string.Format("{0}tmd.{1}", (object) this.CDN_URL_PLUS_TITLEID, (object) this.Version)), SystemType.SystemWiiU);
+      TMDExcractionAndProcessing gclass100 = !(this is GClass33) ? TMDExcractionAndProcessing.ReadTMDBytes(new GClass78().DownloadFile(string.Format("{0}tmd", (object) this.CDN_URL_PLUS_TITLEID)), SystemType.SystemWiiU) : TMDExcractionAndProcessing.ReadTMDBytes(new GClass78().DownloadFile(string.Format("{0}tmd.{1}", (object) this.CDN_URL_PLUS_TITLEID, (object) this.Version)), SystemType.SystemWiiU);
       GClass99 gclass99 = this is GClass33 || this.Platform == Platform.Wii_U_Custom ? GClass99.smethod_7(new GClass78().DownloadFile(this.CDN_URL_PLUS_TITLEID + "cetk"), SystemType.SystemWiiU) : (!this.bool_0 ? GClass99.smethod_7(this.TicketArray, SystemType.SystemWiiU) : GClass99.smethod_7(File.ReadAllBytes(Path.Combine(Path.Combine(GClass88.DirectoryCache, "tickets"), this.TitleId.IdRaw + ".tik")), SystemType.SystemWiiU));
       byte[] inputBuffer = new GClass78().DownloadFile(this.CDN_URL_PLUS_TITLEID + gclass100.GClass101_0[0].ContentId.ToString("x8"));
       using (AesCryptoServiceProvider cryptoServiceProvider = new AesCryptoServiceProvider())
@@ -840,7 +840,7 @@ namespace ns0
         uint contentId = gclass101.ContentId;
         string path2_1 = contentId.ToString("x8") + ".app";
         string str = Path.Combine(outputPath1, path2_1);
-        if (!File.Exists(str) || new FileInfo(str).Length != (long) gclass101.Size.TotalBytes.smethod_2(16U))
+        if (!File.Exists(str) || new FileInfo(str).Length != (long) gclass101.ContentSize.TotalBytes.smethod_2(16U))
           return GEnum2.const_1;
         if (gclass101.Boolean_0)
         {

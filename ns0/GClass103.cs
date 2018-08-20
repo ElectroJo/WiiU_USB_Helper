@@ -6,7 +6,7 @@
 
 namespace ns0
 {
-  public class GClass103 : GClass101
+  public class A_WiiU_CDN_File_Hash : GClass101
   {
     public override byte[] Hash { get; set; } = new byte[20];
   }

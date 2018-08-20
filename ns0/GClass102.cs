@@ -6,7 +6,7 @@
 
 namespace ns0
 {
-  public class GClass102 : GClass101
+  public class A_3DS_CND_File_Hash : GClass101
   {
     public override byte[] Hash { get; set; } = new byte[32];
   }

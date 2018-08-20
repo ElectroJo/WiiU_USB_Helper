@@ -111,7 +111,7 @@ namespace ns0
     {
       if (gclass30_0.GEnum2_0 != GEnum2.const_2)
         throw new Exception("The title must have been downloaded!");
-      foreach (GClass101 gclass101 in TMDExcractionAndProcessing.smethod_1(File.ReadAllBytes(Path.Combine(gclass30_0.OutputPath, "title.tmd")), SystemType.System3DS).GClass101_0)
+      foreach (GClass101 gclass101 in TMDExcractionAndProcessing.ReadTMDBytes(File.ReadAllBytes(Path.Combine(gclass30_0.OutputPath, "title.tmd")), SystemType.System3DS).GClass101_0)
       {
         string string_0 = Path.Combine(gclass30_0.OutputPath, gclass101.ContentId.ToString("x8") + ".app");
         Class85.smethod_6(string_0, string_0 + ".dec", gclass30_0.byte_0, Class85.smethod_9(gclass101.Index));
@@ -358,7 +358,7 @@ namespace ns0
       {
         byte[] array = File.ReadAllBytes(str);
         Array.Resize<byte>(ref array, GClass27.smethod_0(array.Length, 16));
-        byte_0 = SHA1.Create().ComputeHash(Class85.smethod_5(array, byte_1, numArray), 0, (int) gclass101_0.Size.TotalBytes);
+        byte_0 = SHA1.Create().ComputeHash(Class85.smethod_5(array, byte_1, numArray), 0, (int) gclass101_0.ContentSize.TotalBytes);
       }
       return GClass27.smethod_1(byte_0, gclass101_0.Hash);
     }
